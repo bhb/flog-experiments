@@ -54,7 +54,7 @@
   (:requests (admin-post "requests/find" body base-url)))
 
 (defn stub [body & [base-url]]
-    (admin-post "mappings/new" body base-url))
+  (admin-post "mappings/new" body base-url))
 
 (comment
   (def s (server))
