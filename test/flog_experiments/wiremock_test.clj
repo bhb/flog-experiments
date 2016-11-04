@@ -7,7 +7,7 @@
 (use-fixtures :each test-util/wiremock)
 
 (deftest mock-content
-  (wm/stub { :request { :method "GET" :url "/hello"}
+  (wm/stub {:request { :method "GET" :url "/hello"}
             :response { :status 200 :body "Hello World"}})
   (is (= 200 (:status (http/get "http://localhost:8080/hello"))))
   (is (= "Hello World" (:body (http/get "http://localhost:8080/hello")))))

@@ -6,4 +6,6 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [cheshire "5.6.3"]
                  [clj-http "3.3.0"]
+                 [hiccup "1.0.5"]
+                 [hickory "0.6.0"]
                  [com.github.tomakehurst/wiremock "1.54"]])
