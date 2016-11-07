@@ -18,3 +18,10 @@
           "/img/me.jpg"]
          (servers/with-server servers/errors
            #(trad/crawled-images-error-handling "http://localhost:8080" "/index.html")))))
+
+(deftest timeouts-server
+  (is (= ["/img/logo.jpg"
+          "/img/mainpage.jpg"
+          "/img/me.jpg"]
+         (servers/with-server servers/timeouts
+           #(trad/crawled-images-error-handling "http://localhost:8080" "/index.html")))))

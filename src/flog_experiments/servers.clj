@@ -40,56 +40,73 @@
       (h.el/link-to "/about.html" "About")])]))
 
 (defn no-errors []
-  (wm/stub {:request { :method "GET" :url "/index.html"}
-            :response { :status 200 :body index-page}})
-  (wm/stub {:request { :method "GET" :url "/about.html"}
-            :response { :status 200 :body about-page}})
-  (wm/stub {:request { :method "GET" :url "/interests.html"}
-            :response { :status 200 :body interests-page}}))
+  (doseq [sc [{:request {:method "GET" :url "/index.html"}
+               :response {:status 200 :body index-page}}
+              {:request {:method "GET" :url "/about.html"}
+               :response {:status 200 :body about-page}}
+              {:request {:method "GET" :url "/interests.html"}
+               :response {:status 200 :body interests-page}}
+              ]]
+    (wm/stub sc)))
 
 (defn errors []
   (doseq [sc [{:scenarioName "Server overloaded"
                 :requiredScenarioState "Started"
                 :newScenarioState "Some overloaded"
-                :request { :method "GET" :url "/index.html"}
-               :response { :status 503}}
+                :request {:method "GET" :url "/index.html"}
+               :response {:status 503}}
               {:scenarioName "Server overloaded"
                 :requiredScenarioState "Started"
-                :request { :method "GET" :url "/about.html"}
-               :response { :status 503}}
+                :request {:method "GET" :url "/about.html"}
+               :response {:status 503}}
               {:scenarioName "Server overloaded"
                 :requiredScenarioState "Started"
-                :request { :method "GET" :url "/interests.html"}
-               :response { :status 503}}
+                :request {:method "GET" :url "/interests.html"}
+               :response {:status 503}}
               ;;;;;;;;;;;;;;;;;;;
               {:scenarioName "Server overloaded"
                :requiredScenarioState "Some overloaded"
                :newScenarioState "All OK"
-               :request { :method "GET" :url "/index.html"}
-               :response { :status 200 :body index-page}}
+               :request {:method "GET" :url "/index.html"}
+               :response {:status 200 :body index-page}}
               {:scenarioName "Server overloaded"
                :requiredScenarioState "Some overloaded"
                :newScenarioState "All OK"
-               :request { :method "GET" :url "/about.html"}
-               :response { :status 503}}
+               :request {:method "GET" :url "/about.html"}
+               :response {:status 503}}
               {:scenarioName "Server overloaded"
                :requiredScenarioState "Some overloaded"
                :newScenarioState "All OK"
-               :request { :method "GET" :url "/interests.html"}
-               :response { :status 503}}
+               :request {:method "GET" :url "/interests.html"}
+               :response {:status 503}}
               ;;;;;;;;;;;;;;;;;;;
               {:scenarioName "Server overloaded"
                :requiredScenarioState "All OK"
-               :request { :method "GET" :url "/index.html"}
-               :response { :status 200 :body index-page}}
+               :request {:method "GET" :url "/index.html"}
+               :response {:status 200 :body index-page}}
               {:scenarioName "Server overloaded"
                :requiredScenarioState "All OK"
-               :request { :method "GET" :url "/about.html"}
-               :response { :status 200 :body about-page}}
+               :request {:method "GET" :url "/about.html"}
+               :response {:status 200 :body about-page}}
               {:scenarioName "Server overloaded"
                :requiredScenarioState "All OK"
-               :request { :method "GET" :url "/interests.html"}
-               :response { :status 404}}]]
+               :request {:method "GET" :url "/interests.html"}
+               :response {:status 404}}]]
+    (wm/stub sc)))
+
+(defn timeouts []
+  (doseq [sc [{:request {:method "GET" :url "/index.html"}
+               :response {:status 200
+                          :body index-page
+                          :fixedDelayMilliseconds 20}}
+              {:request {:method "GET" :url "/about.html"}
+               :response {:status 200
+                          :body about-page
+                          :fixedDelayMilliseconds 200}}
+              {:request {:method "GET" :url "/interests.html"}
+               :response {:status 200
+                          :body interests-page
+                          :fixedDelayMilliseconds 600}}]]
     (wm/stub sc)))
 
 (defn with-server [setup f]

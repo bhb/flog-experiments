@@ -14,7 +14,7 @@
 
 (deftest mock-timeout
   (wm/stub {:request { :method "GET" :url "/hello"}
-            :response { :status 200 :body "Hello World"
+            :response {:status 200 :body "Hello World"
                        :fixedDelayMilliseconds 500}})
   (is (<= 500 (->> (http/get "http://localhost:8080/hello")
                   time

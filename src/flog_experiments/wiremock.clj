@@ -43,7 +43,7 @@
 (defn- admin-post [endpoint body & [base-url]]
   (let [base-url (or base-url "http://localhost:8080")
         admin-url (str base-url "/__admin/" endpoint)
-        content-to-post { :body (generate-string body)}
+        content-to-post {:body (generate-string body)}
         response (client/post admin-url content-to-post)]
     (parse-string (:body response) true)))
 
@@ -61,8 +61,8 @@
   (let [s (server)]
     (start s)
     ;; check http://localhost:8080/__admin/ for config
-    (stub { :request { :method "GET" :url "/hello"}
-           :response { :status 200 :body "Hello World"}})
+    (stub {:request {:method "GET" :url "/hello"}
+           :response {:status 200 :body "Hello World"}})
     (client/get "http://localhost:8080/hello")
     (stop s)
     )
