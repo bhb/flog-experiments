@@ -38,13 +38,16 @@
       (let [body (:body (http/get u))
             new-imgs (internal-images body)
             new-urls (remove visited-urls (internal-urls domain body))]
-        (recur (into visited-urls new-urls)
+        (recur (into visited-urls [u])
                (into remaining-urls new-urls)
                (distinct (into images new-imgs))))
       (sort images))))
 
 (defn temporary-error? [x]
   (#{503} x))
+
+(defn non-fatal-error? [x]
+  (#{404} x))
 
 (defn success? [x]
   (#{200 201 204} x))
@@ -70,11 +73,16 @@
                      urls
                      images
                      (update errors u conj status)))
-            (throw (ex-info "Server returned unrecoverable response" {:response response})))
+            (if (non-fatal-error? status)
+              (recur (into visited-urls [u])
+                     remaining-urls
+                     images
+                     errors)
+              (throw (ex-info "Server returned unrecoverable response" {:response response}))))
           (let [body (:body response)
                 new-imgs (internal-images body)
                 new-urls (remove visited-urls (internal-urls domain body))]
-            (recur (into visited-urls new-urls)
+            (recur (into visited-urls [u])
                    (into remaining-urls new-urls)
                    (distinct (into images new-imgs))
                    errors)))))))

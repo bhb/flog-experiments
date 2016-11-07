@@ -3,13 +3,6 @@
               [hiccup.page :as h.page]
               [hiccup.element :as h.el]))
 
-(def images
-  ["/img/clojure.jpg"
-   "/img/logo.jpg"
-   "/img/mainpage.jpg"
-   "/img/me.jpg"
-   "/img/rock-climbing.jpg"])
-
 (def index-page
   (h.page/html5
    [:body
@@ -19,7 +12,8 @@
     (h.el/image "/img/logo.jpg")
     (h.el/image "/img/mainpage.jpg")
     (h.el/unordered-list
-     [(h.el/link-to "/about.html" "About")
+     [(h.el/link-to "/index.html" "Home")
+      (h.el/link-to "/about.html" "About")
       (h.el/link-to "/interests.html" "Interests")])]))
 
 (def about-page
@@ -95,7 +89,7 @@
               {:scenarioName "Server overloaded"
                :requiredScenarioState "All OK"
                :request { :method "GET" :url "/interests.html"}
-               :response { :status 200 :body interests-page}}]]
+               :response { :status 404}}]]
     (wm/stub sc)))
 
 (defn with-server [setup f]
