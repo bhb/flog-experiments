@@ -44,6 +44,8 @@
       {:status :timeout})))
 
 
+;; public ;;;;
+
 (defn crawled-images-error-handling
   "Crawls URL and returns a list of images found within that domain.
   
@@ -92,8 +94,6 @@
           :else
           (throw (ex-info "Server returned unrecoverable response" {:response response})))))))
 
-;; public ;;;;
-
 (defn crawled-images
   "Crawls URL and returns a list of images found within that domain."
   [domain url]
@@ -112,5 +112,4 @@
 (comment
   (servers/with-server
     servers/errors
-    #(crawled-images-error-handling "http://localhost:8080" "/index.html"))
-  )
+    #(crawled-images-error-handling "http://localhost:8080" "/index.html")))
