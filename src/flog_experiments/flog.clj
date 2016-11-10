@@ -76,3 +76,16 @@
                       last)]
     (second entry)
     {}))
+
+(comment
+  (s/explain
+   :fx/log
+   [[:command
+     {:name :http/get, :data {:url "http://localhost:8080/index.html"}}]
+    [:event {:name :http/get,
+             :data {:url "http://localhost:8080/index.html",
+                    :body
+                    "<some html>",
+                    :status 200}}]]
+   [:command {:name :fx/return
+              :data {:fx/value "<some html>"}}]))
