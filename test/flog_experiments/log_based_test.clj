@@ -36,3 +36,20 @@
           "/img/rock-climbing.jpg"]
          (servers/with-server servers/no-errors
            #(crawled-images! "http://localhost:8080" "/index.html")))))
+
+(deftest errors-server
+  (is (= ["/img/logo.jpg"
+          "/img/mainpage.jpg"
+          "/img/me.jpg"]
+         (servers/with-server servers/errors
+           #(crawled-images-error-handling! "http://localhost:8080" "/index.html")))))
+
+;; TODO - add timeouts
+
+
+
+
+
+
+
+
