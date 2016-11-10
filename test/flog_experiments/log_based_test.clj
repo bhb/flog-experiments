@@ -28,7 +28,7 @@
                f
                f)))))
 
-(deftest no-errors-server
+#_(deftest no-errors-server
   (is (= ["/img/clojure.jpg"
           "/img/logo.jpg"
           "/img/mainpage.jpg"
@@ -37,19 +37,16 @@
          (servers/with-server servers/no-errors
            #(crawled-images! "http://localhost:8080" "/index.html")))))
 
-(deftest errors-server
+#_(deftest errors-server
   (is (= ["/img/logo.jpg"
           "/img/mainpage.jpg"
           "/img/me.jpg"]
          (servers/with-server servers/errors
            #(crawled-images-error-handling! "http://localhost:8080" "/index.html")))))
 
-;; TODO - add timeouts
-
-
-
-
-
-
-
-
+(deftest timeouts-server
+  (is (= ["/img/logo.jpg"
+          "/img/mainpage.jpg"
+          "/img/me.jpg"]
+         (servers/with-server servers/timeouts
+           #(crawled-images-error-handling! "http://localhost:8080" "/index.html")))))

@@ -68,6 +68,8 @@
                            :data {:fx/value val}}]] val
                :else new-log))))
 
+;; TODO - might clean things up to merge state from oldest to newest
+;;        so implementations don't need to manually merge state
 (defn state [log]
   (if-let [entry (->> log
                       (filter #(= (first %) :state))
