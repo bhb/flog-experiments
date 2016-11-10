@@ -28,7 +28,7 @@
                f
                f)))))
 
-#_(deftest no-errors-server
+(deftest no-errors-server
   (is (= ["/img/clojure.jpg"
           "/img/logo.jpg"
           "/img/mainpage.jpg"
@@ -37,7 +37,7 @@
          (servers/with-server servers/no-errors
            #(crawled-images! "http://localhost:8080" "/index.html")))))
 
-#_(deftest errors-server
+(deftest errors-server
   (is (= ["/img/logo.jpg"
           "/img/mainpage.jpg"
           "/img/me.jpg"]
