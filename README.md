@@ -1,6 +1,6 @@
 # flog-experiments
 
-Experiments in log-based IO
+Experiments in log-based IO (i.e. effect logs or f-logs for short)
 
 ## Usage
 
